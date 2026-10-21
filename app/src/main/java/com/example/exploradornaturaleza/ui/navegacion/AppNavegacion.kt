@@ -3,6 +3,7 @@ package com.example.exploradornaturaleza.ui.navegacion
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
@@ -24,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.exploradornaturaleza.ui.screens.ClimaScreen
 import com.example.exploradornaturaleza.ui.screens.DetalleRazaScreen
+import com.example.exploradornaturaleza.ui.screens.FavoritasScreen
 import com.example.exploradornaturaleza.ui.screens.GatosScreen
 import com.example.exploradornaturaleza.ui.screens.RazasScreen
 
@@ -33,6 +35,7 @@ object Rutas {
     const val DETALLE = "detalle/{$ARG_NOMBRE}"
     const val CLIMA = "clima"
     const val GATOS = "gatos"
+    const val FAVORITAS = "favoritas"
 
     // El nombre de la raza viaja como argumento de navegación: "detalle/bulldog"
     fun detalle(nombre: String) = "detalle/$nombre"
@@ -43,7 +46,8 @@ private data class Destino(val ruta: String, val titulo: String, val icono: Imag
 private val destinosInferiores = listOf(
     Destino(Rutas.RAZAS, "Razas", Icons.Default.Home),
     Destino(Rutas.CLIMA, "Clima", Icons.Default.Place),
-    Destino(Rutas.GATOS, "Gatos", Icons.Default.Face)
+    Destino(Rutas.GATOS, "Gatos", Icons.Default.Face),
+    Destino(Rutas.FAVORITAS, "Favoritas", Icons.Default.Favorite)
 )
 
 @Composable
@@ -82,6 +86,9 @@ fun AppNavegacion() {
             }
             composable(Rutas.CLIMA) { ClimaScreen() }
             composable(Rutas.GATOS) { GatosScreen() }
+            composable(Rutas.FAVORITAS) {
+                FavoritasScreen(onRazaClick = { nombre -> navController.navigate(Rutas.detalle(nombre)) })
+            }
         }
     }
 }
